@@ -1,0 +1,23 @@
+/*
+ *
+ * ChatPageJs constants
+ *
+ */
+
+export const FETCH_CHANNELS = 'app/ChatPageJs/FETCH_CHANNELS';
+export const FETCH_CHAT_LIST = 'app/ChatPageJs/FETCH_CHAT_LIST';
+export const DEFAULT_ACTION = 'app/ChatPageJs/DEFAULT_ACTION';
+
+export const LINEUP_TYPES = Object.freeze({
+  HEADLINER: 'HEADLINER',
+  OPENER: 'OPENER',
+});
+
+export const MESSAGE_TYPES = Object.freeze({
+  MESSAGE: 'MESSAGE',
+  BOOKING: 'BOOKING',
+  BOOKING_REQUESTED: 'BOOKING_REQUESTED',
+  BOOKING_ACCEPTED: 'BOOKING_ACCEPTED',
+  BOOKING_MODIFIED: 'BOOKING_MODIFIED',
+  BOOKING_DECLINED: 'BOOKING_DECLINED',
+});

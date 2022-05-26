@@ -1,0 +1,1162 @@
+schema {
+  query: Query
+  mutation: CadenzoMutation
+  subscription: RootSubscription
+}
+
+type AcceptBookingRequest {
+  success: Boolean
+}
+
+type AddPaymentMethod {
+  success: Boolean
+  msg: String
+}
+
+type AddressFieldNode implements Node {
+  streetNumber: String!
+  route: String!
+  locality: LocalityField
+  raw: String!
+  formatted: String!
+  latitude: Float
+  longitude: Float
+  id: ID!
+  dbId: Int
+}
+
+input AddressInputField {
+  raw: String!
+  locality: LocalityInputfield
+  streetNumber: String
+  route: String
+  formatted: String!
+  latitude: Float!
+  longitude: Float!
+  id: String
+}
+
+type AddressNode {
+  streetNumber: String!
+  route: String!
+  locality: LocalityField
+  raw: String!
+  formatted: String!
+  latitude: Float
+  longitude: Float
+  id: ID!
+}
+
+type Analytics {
+  primarySales(eventId: ID): [DataPoint]
+  secondarySales(eventId: ID): [DataPoint]
+  monthlyPrimarySales(eventId: ID): [DataPoint]
+  monthlySecondarySales(eventId: ID): [DataPoint]
+}
+
+type ArtistNode implements Node {
+  id: ID!
+  admins: [UserNode]
+  rootUser: UserNode!
+  avatar: String
+  name: String!
+  hometown: AddressNode!
+  description: String
+  isVerified: Boolean!
+  isCurator: Boolean!
+  isPublicProfile: Boolean!
+  socialLinks: [String]!
+  performanceTypes: [String]!
+  images: [String]
+  genres: [String]!
+  featuredMedia: [String]
+  numberOfBandMembers: Int
+  spotifyProfile: String
+  instagramProfile: String
+  facebookProfile: String
+  youtubeProfile: String
+  soundcloudProfile: String
+  bandcampProfile: String
+  applemusicProfile: String
+  twitterProfile: String
+  isBand: Boolean!
+  emailNotifiers: [String]
+  documents: [DocumentNode]
+  bandMembers(before: String, after: String, first: Int, last: Int, admins: [ID], rootUser: ID, avatar: String, name: String, hometown: ID, description: String, isVerified: Boolean, isCurator: Boolean, isPublicProfile: Boolean, performanceTypes: String, genres: String, numberOfBandMembers: Int, spotifyProfile: String, instagramProfile: String, facebookProfile: String, youtubeProfile: String, soundcloudProfile: String, bandcampProfile: String, applemusicProfile: String, twitterProfile: String, isBand: Boolean, documents: [ID], bandMembers: [ID], swLat: Float, swLng: Float, neLat: Float, neLng: Float, availabilityBetween: String, nameContains: String, orderBy: String): ArtistNodeConnection!
+  artistSet(before: String, after: String, first: Int, last: Int, admins: [ID], rootUser: ID, avatar: String, name: String, hometown: ID, description: String, isVerified: Boolean, isCurator: Boolean, isPublicProfile: Boolean, performanceTypes: String, genres: String, numberOfBandMembers: Int, spotifyProfile: String, instagramProfile: String, facebookProfile: String, youtubeProfile: String, soundcloudProfile: String, bandcampProfile: String, applemusicProfile: String, twitterProfile: String, isBand: Boolean, documents: [ID], bandMembers: [ID], swLat: Float, swLng: Float, neLat: Float, neLng: Float, availabilityBetween: String, nameContains: String, orderBy: String): ArtistNodeConnection!
+  confirmedBookings(before: String, after: String, first: Int, last: Int): BookingConnection!
+  bookingRequests(before: String, after: String, first: Int, last: Int, status: String, startDate_Gte: DateTime, startDate_Gt: DateTime, startDate: DateTime): BookingRequestNodeConnection!
+  calendar: ScheduleNode
+  chatrooms: [ChatRoomNode]
+  databaseId: Int
+  rId: ID
+  address: AddressNode
+  cancelledBookings(before: String, after: String, first: Int, last: Int): BookingConnection!
+}
+
+type ArtistNodeConnection {
+  pageInfo: PageInfo!
+  edges: [ArtistNodeEdge]!
+}
+
+type ArtistNodeEdge {
+  node: ArtistNode
+  cursor: String!
+}
+
+enum AttendeeScope {
+  EVENT
+  ALL
+}
+
+enum AttendeeStatus {
+  ATTENDING
+  NOT_CHECKED_IN
+  CHECKED_IN
+  RESELLER
+}
+
+input AvailabilityNode {
+  guarantee: Int = 0
+  doorSplit: Int = 0
+  isNegotiable: Boolean = true
+  location: AddressInputField
+  startTime: Time
+  endTime: Time
+  dayOfWeek: String
+}
+
+type BookingConnection {
+  pageInfo: PageInfo!
+  edges: [BookingEdge]!
+  extra: String
+}
+
+type BookingEdge {
+  node: BookingNode
+  cursor: String!
+  other: String
+}
+
+enum BookingInitiatorEnum {
+  VENUE
+  ARTIST
+}
+
+enum BookingLineupSlot {
+  OPENER
+  HEADLINER
+}
+
+type BookingNode implements Node {
+  id: ID!
+  venue: VenueNode
+  startDate: DateTime!
+  endDate: DateTime!
+  performer: ArtistNode
+  revenueSplit: BookingRevenueSplit!
+  revenueSplitAmount: Int!
+  stipulations: [String]
+  performanceTypes: [String]
+  guarantee: Int!
+  lineupSlot: BookingLineupSlot!
+  performanceLength: Int
+  doorSplit: Int!
+  slotId: String!
+  isCancelled: Boolean!
+  cancelledTimestamp: DateTime
+  createdAt: DateTime!
+  cancelledBy: UserNode
+  databaseId: String
+}
+
+type BookingNodeConnection {
+  pageInfo: PageInfo!
+  edges: [BookingNodeEdge]!
+}
+
+type BookingNodeEdge {
+  node: BookingNode
+  cursor: String!
+}
+
+enum BookingRequestLineupSlot {
+  OPENER
+  HEADLINER
+}
+
+type BookingRequestNode implements Node {
+  performer: ArtistNode!
+  venue: VenueNode!
+  status: BookingRequestStatus!
+  lastUpdatedBy: UserNode
+  startDate: DateTime!
+  endDate: DateTime!
+  performanceLength: Int
+  lineupSlot: BookingRequestLineupSlot!
+  stipulations: [String]
+  guarantee: Int!
+  revenueSplit: BookingRequestRevenueSplit!
+  revenueSplitAmount: Int!
+  id: ID!
+  databaseId: String
+  initiator: String
+}
+
+type BookingRequestNodeConnection {
+  pageInfo: PageInfo!
+  edges: [BookingRequestNodeEdge]!
+}
+
+type BookingRequestNodeEdge {
+  node: BookingRequestNode
+  cursor: String!
+}
+
+enum BookingRequestRevenueSplit {
+  PERCENTAGE
+  AMOUNT
+}
+
+enum BookingRequestStatus {
+  P
+  A
+  R
+}
+
+enum BookingRevenueSplit {
+  PERCENTAGE
+  AMOUNT
+}
+
+type CadenzoMutation {
+  sendChatMessage(chatroom: String, members: [ID], sender: ID, text: String): SendChatMessagePayload
+  createEvent(address: String!, coverImage: String!, description: String, endDate: DateTime!, startDate: DateTime!, title: String!, type: EventTypeEnum!): CreateEvent
+  updateEventCover(attachedFile: Upload!, filename: String!, id: ID): UpdateEventCover
+  editEvent(address: String, description: String, endDate: DateTime, id: ID!, startDate: DateTime, title: String, type: EventTypeEnum): EditEvent
+  deleteEvent(id: ID!): DeleteEvent
+  followOrganizer(oids: [ID]!): FollowOrganizer
+  setPublishStatusForEvent(id: ID!, publishState: Boolean!): SetPublishStatusForEvent
+  unfollowOrganizer(oids: [ID]!): UnfollowOrganizer
+  favoriteEvent(ids: [ID]!): FavoriteEvent
+  unfavoriteEvent(ids: [ID]!): UnFavoriteEvent
+  createMembership(events: [Int], name: String!, price: Float!): CreateMembership
+  editMembership(events: [Int], id: ID!, name: String, price: Float): EditMembership
+  createTicketForEvent(amount: Int!, basePrice: Float!, description: String, eventId: ID!, isMarketplaceAllowed: Boolean!, maxMarkupPrice: Float, name: String!): CreateTicketsForEvent
+  editTicketForEvent(basePrice: Float!, description: String!, id: ID!, isMarketplaceAllowed: Boolean!, maxMarkupPrice: Float, name: String!): EditTicketsForEvent
+  deleteTicketsForEvent(id: ID!): DeleteTicketsForEvent
+  resetPassword(confirmNewPassword: String!, newPassword: String!, oldPassword: String!): ResetPassword
+  updateProfile(email: String, name: String): UpdateProfile
+  addPaymentMethod(cardNumber: String!, cvc: String!, expiry: String!, paymentType: String, zipCode: Int!): AddPaymentMethod
+  createVenueMap(events: [Int], mapName: String!, seatingChart: JSONString, seatingMap: JSONString): CreateVenueMap
+  editVenueMap(events: [Int], id: ID!, mapName: String!, seatingChart: JSONString, seatingMap: JSONString): EditVenueMap
+  removePaymentMethod(paymentMethodId: String!): RemovePaymentMethod
+  updateReservedTickets(id: ID!, ticketHolders: JSONString): UpdateReservedTickets
+  transferTicket(email: String!, id: ID!): TransferTicket
+  checkInUser(id: ID!, userId: ID!): CheckInUser
+  placeTicketOnMarketplace(id: ID!, isOnMarketplace: Boolean!, price: Int!): PlaceTicketOnMarketplace
+  replyToTicketTransfer(email: String, id: ID!, reply: String!): ReplyToTicketTransfer
+  createArtistProfile(applemusicProfile: String, avatar: String, bandcampProfile: String, description: String, emailNotifiers: [String] = [], facebookProfile: String, featuredMedia: [String], genres: [String], hometown: AddressInputField, images: [String]!, instagramProfile: String, isBand: Boolean = false, name: String, performanceTypes: [String], socialLinks: [String], soundcloudProfile: String, spotifyProfile: String, twitterProfile: String, youtubeProfile: String): CreateArtistProfile
+  createVenueProfile(address: AddressInputField, anemities: [String], avatar: String, capacity: String!, description: String!, exactCapacity: Int, facebookProfile: String, images: [String], instagramProfile: String, name: String!, preferredPerformances: [String], socialLinks: [String], spaceType: String!, website: String, wifiPassword: String): CreateVenueProfile
+  editVenueProfile(address: AddressInputField, anemities: [String], avatar: String, bandMembers: [Int], capacity: String!, description: String!, exactCapacity: Int, facebookProfile: String, id: ID!, images: [String], instagramProfile: String, isBand: Boolean, name: String!, preferredPerformances: [String], socialLinks: [String], spaceType: String!, website: String, wifiPassword: String): EditVenueProfile
+  editArtistProfile(applemusicProfile: String, avatar: String, bandcampProfile: String, description: String, emailNotifiers: [String], facebookProfile: String, featuredMedia: [String], genres: [String], hometown: AddressInputField, id: ID!, images: [String]!, instagramProfile: String, isBand: Boolean, name: String, performanceTypes: [String], socialLinks: [String], soundcloudProfile: String, spotifyProfile: String, twitterProfile: String, youtubeProfile: String): EditArtistProfile
+  deleteArtistProfile(id: ID!): DeleteArtistProfile
+  deleteVenueProfile(id: ID!): DeleteVenueProfile
+  uploadImage(attachedFile: Upload!, filename: String!): UploadImage
+  uploadGenericFile(attachedFile: Upload!, filename: String!): UploadGenericFile
+  sendProfileRequest(businessName: String, contactName: String!, contactPhone: String, contactSocialMedia: String, location: AddressInputField, profileName: String): sendProfileRequest
+  modifyUserSchedule(profileId: ID!, scheduleOverrides: [TimeRange], weeklyAvailability: [AvailabilityNode]): ModifySchedule
+  sendBookingRequest(artistId: ID!, doorSplit: Int, endDate: DateTime!, guarantee: Int, hostId: ID!, initiator: BookingInitiatorEnum!, message: String!, revenueSplit: String, revenueSplitAmount: Int, slotId: ID, startDate: DateTime!, stipulations: [String]): SendBookingRequest
+  modifyBookingRequest(endDate: DateTime, guarantee: Int, id: ID, lineupSlot: String, modifierId: ID!, performanceLength: Int, revenueSplit: String, revenueSplitAmount: Int, startDate: DateTime, status: String, stipulations: [String]): ModifyBookingRequest
+  acceptBookingRequest(id: ID): AcceptBookingRequest
+  declineBookingRequest(id: ID): DeclineBookingRequest
+  updateProfileAdmins(profileId: ID, users: [String]!): UpdateProfileAdmins
+  sendAdminInvitations(profileId: ID!, toEmails: [String]!): SendAdminInvitations
+  sendBookingInvitations(doorSplit: Int, endDate: DateTime!, guarantee: Int, id: ID, initiator: BookingInitiatorEnum!, lineupSlot: String!, message: String, profileId: ID!, receiverId: ID, revenueSplit: String, revenueSplitAmount: Int, startDate: DateTime!, stipulations: [String], toEmail: String!): SendBookingInvitations
+  CancelBooking(by: ID!, id: ID): CancelBooking
+  modifyProfileDocuments(documents: [DocumentInputNode]!, id: ID!): ModifyProfileDocuments
+}
+
+type CalendarDay {
+  calendarDate: Date!
+  isAvailable: Boolean!
+  availableSlots: [CalendarSlot]
+  amtSlotsOpen: Int
+  amtSlotsFilled: Int
+  confirmedSlots: [BookingNode]
+  requestedSlots: [BookingRequestNode]
+}
+
+type CalendarSlot {
+  startTime: Time
+  endTime: Time
+  startDate: DateTime
+  endDate: DateTime
+  guarantee: Int
+  isNegotiable: Boolean
+  doorSplit: Int
+  location: AddressFieldNode
+  slotId: String
+}
+
+type CancelBooking {
+  success: Boolean
+}
+
+type ChatRoomNode implements Node {
+  members(before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String, name_Istartswith: String, username: String, username_Icontains: String, username_Istartswith: String, email: String, email_Icontains: String): UserNodeConnection!
+  name: String
+  isDm: Boolean!
+  business: VenueNode
+  messages(before: String, after: String, first: Int, last: Int): MessageNodeConnection!
+  id: ID!
+  isVenueAdmin: Boolean
+  databaseId: String
+  bookingRequests: [BookingRequestNode]
+}
+
+type ChatRoomNodeConnection {
+  pageInfo: PageInfo!
+  edges: [ChatRoomNodeEdge]!
+}
+
+type ChatRoomNodeEdge {
+  node: ChatRoomNode
+  cursor: String!
+}
+
+type CheckInUser {
+  success: Boolean
+}
+
+type CountryField implements Node {
+  name: String
+  code: String
+  id: ID!
+}
+
+input CountryInputfield {
+  name: String!
+  code: String!
+  id: String
+}
+
+type CreateArtistProfile {
+  success: Boolean
+  msg: String
+}
+
+type CreateEvent {
+  success: Boolean
+  event: EventNode
+}
+
+type CreateMembership {
+  success: Boolean
+  membership: MembershipNode
+}
+
+type CreateTicketsForEvent {
+  success: Boolean
+  ticketGroup: ProductTypeNode
+}
+
+type CreateVenueMap {
+  success: Boolean
+  venueMap: VenueMapNode
+}
+
+type CreateVenueProfile {
+  success: Boolean
+  msg: String
+}
+
+type DataPoint {
+  date: String
+  value: Float
+  label: String
+  info: JSONString
+}
+
+scalar Date
+
+scalar DateTime
+
+type DeclineBookingRequest {
+  success: Boolean
+}
+
+type DeleteArtistProfile {
+  success: Boolean
+}
+
+type DeleteEvent {
+  success: Boolean
+}
+
+type DeleteTicketsForEvent {
+  success: Boolean
+}
+
+type DeleteVenueProfile {
+  success: Boolean
+}
+
+enum DocumentDocumentType {
+  SHOW
+  LEGAL
+}
+
+input DocumentInputNode {
+  name: String!
+  url: String!
+  description: String
+  documentType: String = "SHOW"
+}
+
+type DocumentNode {
+  id: ID!
+  name: String!
+  url: String!
+  description: String
+  documentType: DocumentDocumentType!
+  artistSet(before: String, after: String, first: Int, last: Int, admins: [ID], rootUser: ID, avatar: String, name: String, hometown: ID, description: String, isVerified: Boolean, isCurator: Boolean, isPublicProfile: Boolean, performanceTypes: String, genres: String, numberOfBandMembers: Int, spotifyProfile: String, instagramProfile: String, facebookProfile: String, youtubeProfile: String, soundcloudProfile: String, bandcampProfile: String, applemusicProfile: String, twitterProfile: String, isBand: Boolean, documents: [ID], bandMembers: [ID], swLat: Float, swLng: Float, neLat: Float, neLng: Float, availabilityBetween: String, nameContains: String, orderBy: String): ArtistNodeConnection!
+}
+
+type EditArtistProfile {
+  success: Boolean
+  msg: String
+}
+
+type EditEvent {
+  success: Boolean
+  event: EventNode
+}
+
+type EditMembership {
+  success: Boolean
+  membership: MembershipNode
+}
+
+type EditTicketsForEvent {
+  success: Boolean
+  ticketGroup: ProductTypeNode
+}
+
+type EditVenueMap {
+  success: Boolean
+  venueMap: VenueMapNode
+}
+
+type EditVenueProfile {
+  success: Boolean
+  msg: String
+}
+
+type EventNode implements Node {
+  title: String!
+  organizer: OrganizerNode!
+  startDate: DateTime!
+  endDate: DateTime!
+  isPublic: Boolean!
+  type: EventTypeEnum
+  description: String
+  address: String
+  coverImage: String
+  photos: [String]
+  venue: VenueNode
+  venueMap: VenueMapNode
+  productGroups(before: String, after: String, first: Int, last: Int, name: String, description_Icontains: String, category: String): ProductTypeNodeConnection!
+  id: ID!
+  databaseId: Int
+  venueName: Int
+  totalRevenue: Float
+  grossRevenue: Float
+  revenuePerCap: Float
+  isFavorited: Boolean
+  ticketPrimaryRevenue: [DataPoint]
+  revenueByTicketGroup: [DataPoint]
+}
+
+type EventNodeConnection {
+  pageInfo: PageInfo!
+  edges: [EventNodeEdge]!
+}
+
+type EventNodeEdge {
+  node: EventNode
+  cursor: String!
+}
+
+enum EventStatus {
+  HOLD_STATUS
+  CONFIRMED_STATUS
+  IN_SETTLEMENT_STATUS
+  SETTLED_STATUS
+}
+
+enum EventTypeEnum {
+  Music
+  Festival
+  Musical
+  Concert
+  ArtsAndEntertainment
+  Business
+  Sports
+}
+
+type FavoriteEvent {
+  success: Boolean
+  msg: String
+}
+
+type FollowOrganizer {
+  success: Boolean
+  msg: String
+}
+
+enum InvitationInvitationType {
+  ADMIN
+  BOOKING
+}
+
+type InvitationNode {
+  id: UUID!
+  invitationType: InvitationInvitationType!
+  createdAt: DateTime!
+  isAccepted: Boolean!
+  profileId: String!
+  email: String!
+  extraData: JSONString!
+}
+
+scalar JSONString
+
+type LocalityField implements Node {
+  name: String
+  postalCode: String
+  state: StateField!
+  id: ID!
+}
+
+input LocalityInputfield {
+  state: StateInputfield!
+  postalCode: String
+  name: String
+  id: String
+}
+
+enum MembershipMembershipType {
+  SUBSCRIPTION
+  SEASONAL
+}
+
+type MembershipNode implements Node {
+  name: String!
+  organizer: OrganizerNode!
+  events(before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, organizer_Email: String, organizer_Email_Icontains: String, organizer_Email_Istartswith: String, startDate: DateTime, startDate_Icontains: DateTime, startDate_Istartswith: DateTime, startDate_Lte: DateTime, startDate_Gte: DateTime, endDate: DateTime, endDate_Icontains: DateTime, endDate_Istartswith: DateTime, endDate_Lte: DateTime, endDate_Gte: DateTime, type: String, type_Icontains: String, settleStatus_Contains: String, description_Icontains: String, address: ID, isPublic: Boolean): EventNodeConnection!
+  price: Int!
+  membershipType: MembershipMembershipType!
+  autoAddEvents: Boolean!
+  id: ID!
+  eventsRemaining: Int
+  amountSold: Int
+}
+
+type MembershipNodeConnection {
+  pageInfo: PageInfo!
+  edges: [MembershipNodeEdge]!
+}
+
+type MembershipNodeEdge {
+  node: MembershipNode
+  cursor: String!
+}
+
+type MembershipSubscriptionNode implements Node {
+  membership: MembershipNode!
+  user: UserNode!
+  dateBought: DateTime!
+  amountPaid: Float!
+  isActive: Boolean!
+  expirationDate: Date!
+  id: ID!
+}
+
+type MembershipSubscriptionNodeConnection {
+  pageInfo: PageInfo!
+  edges: [MembershipSubscriptionNodeEdge]!
+}
+
+type MembershipSubscriptionNodeEdge {
+  node: MembershipSubscriptionNode
+  cursor: String!
+}
+
+type MessageNode implements Node {
+  id: ID!
+  sender: UserNode!
+  content: String!
+  createdAt: DateTime!
+  recipient: UserNode
+  email: String!
+  parent: MessageNode
+  thread: MessageNode
+  sentAt: DateTime!
+  readAt: DateTime
+  repliedAt: DateTime
+  extraData: JSONString!
+}
+
+type MessageNodeConnection {
+  pageInfo: PageInfo!
+  edges: [MessageNodeEdge]!
+}
+
+type MessageNodeEdge {
+  node: MessageNode
+  cursor: String!
+}
+
+type ModifyBookingRequest {
+  success: Boolean
+  buffer: BookingRequestNode
+}
+
+type ModifyProfileDocuments {
+  success: Boolean
+}
+
+type ModifySchedule {
+  success: Boolean
+}
+
+interface Node {
+  id: ID!
+}
+
+type OnNewChatMessage {
+  chatroom: String
+  text: String
+  sender: String
+  event: String
+}
+
+type OrganizerNode implements Node {
+  id: ID!
+  lastLogin: DateTime
+  username: String!
+  firstName: String!
+  lastName: String!
+  dateJoined: DateTime!
+  name: String
+  email: String!
+  avatar: String
+  isActive: Boolean!
+  isAdmin: Boolean!
+  isVerified: Boolean!
+  isInternalUser: Boolean!
+  is2faEnabled: Boolean!
+  emailConfirmed: Boolean!
+  isStaff: Boolean!
+  stripeId: String
+  description: String
+  user: UserNode!
+  hasVerifiedBankAccount: Boolean!
+  stripeAccountId: String
+  venuemapSet(before: String, after: String, first: Int, last: Int, creator_Email: String): VenueMapNodeConnection!
+  events(before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, organizer_Email: String, organizer_Email_Icontains: String, organizer_Email_Istartswith: String, startDate: DateTime, startDate_Icontains: DateTime, startDate_Istartswith: DateTime, startDate_Lte: DateTime, startDate_Gte: DateTime, endDate: DateTime, endDate_Icontains: DateTime, endDate_Istartswith: DateTime, endDate_Lte: DateTime, endDate_Gte: DateTime, type: String, type_Icontains: String, settleStatus_Contains: String, description_Icontains: String, address: ID, isPublic: Boolean): EventNodeConnection!
+  eventMemberships(before: String, after: String, first: Int, last: Int): MembershipNodeConnection!
+  databaseId: Int
+  doesFollow: Boolean
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type PlaceTicketOnMarketplace {
+  success: Boolean
+}
+
+enum ProductTypeCategory {
+  ALCOHOL
+  MERCHANDISE
+  BEVERAGE
+  FOOD
+  TICKET
+  OTHER
+}
+
+type ProductTypeNode implements Node {
+  uuid: UUID!
+  name: String!
+  basePrice: Float!
+  maxMarkupPrice: Int
+  event: EventNode!
+  description: String!
+  isMarketplaceAllowed: Boolean!
+  category: ProductTypeCategory!
+  id: ID!
+  ticketAmt: Int
+  groupHolds: [TicketNode]
+  amtSold: Int
+  ticketHolders: [TicketHolder]
+}
+
+type ProductTypeNodeConnection {
+  pageInfo: PageInfo!
+  edges: [ProductTypeNodeEdge]!
+}
+
+type ProductTypeNodeEdge {
+  node: ProductTypeNode
+  cursor: String!
+}
+
+union Profile = VenueNode | ArtistNode
+
+type Query {
+  bookingDetail(id: ID): BookingNode
+  bookingRequest(id: ID): BookingRequestNode
+  artist(id: ID): ArtistNode
+  profile(id: ID): Profile
+  chatroom(id: ID): ChatRoomNode
+  event(id: ID): EventNode
+  events(before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, organizer_Email: String, organizer_Email_Icontains: String, organizer_Email_Istartswith: String, startDate: DateTime, startDate_Icontains: DateTime, startDate_Istartswith: DateTime, startDate_Lte: DateTime, startDate_Gte: DateTime, endDate: DateTime, endDate_Icontains: DateTime, endDate_Istartswith: DateTime, endDate_Lte: DateTime, endDate_Gte: DateTime, type: String, type_Icontains: String, settleStatus_Contains: String, description_Icontains: String, address: ID, isPublic: Boolean): EventNodeConnection
+  membership(id: ID): MembershipNode
+  membershipSubscription(id: ID): MembershipSubscriptionNode
+  ticket(id: ID): TicketNode
+  tickets(before: String, after: String, first: Int, last: Int, isOnMarketplace: Boolean, isHold: Boolean, marketplacePrice: Int, marketplacePrice_Icontains: Int, marketplacePrice_Istartswith: Int, uuid: UUID, productType_Event_Id: ID): TicketNodeConnection
+  venues(before: String, after: String, first: Int, last: Int, admins: [ID], avatar: String, spaceType: String, instagramProfile: String, facebookProfile: String, isAssignedSeating: Boolean, name: String, description: String, isVerified: Boolean, dailyBookingFee: Int, availabilityBetween: String, hourlyBookingFee: Int, capacity: String, exactCapacity: Int, confirmedBookings: [ID], website: String, swLat: Float, swLng: Float, neLat: Float, neLng: Float, amenities: String, genres: String, orderBy: String): VenueNodeConnection
+  venue(id: ID): VenueNode
+  productType(id: ID): ProductTypeNode
+  productTypes(before: String, after: String, first: Int, last: Int, name: String, description_Icontains: String, category: String): ProductTypeNodeConnection
+  checkDiscountCode(ticketGroupIds: [ID], discountCode: String): TicketDiscountNode
+  getDirectCheckoutTickets(email: String, ticketGroupIds: [ID], checkoutAmounts: [Int]): Boolean
+  venueMap(id: ID): VenueMapNode
+  getAddresses(rawAddress: String!, searchTypes: [String]): JSONString
+  getAddressDetail(placeId: String!): AddressFieldNode
+  user: UserNode
+  artists(before: String, after: String, first: Int, last: Int, admins: [ID], rootUser: ID, avatar: String, name: String, hometown: ID, description: String, isVerified: Boolean, isCurator: Boolean, isPublicProfile: Boolean, performanceTypes: String, genres: String, numberOfBandMembers: Int, spotifyProfile: String, instagramProfile: String, facebookProfile: String, youtubeProfile: String, soundcloudProfile: String, bandcampProfile: String, applemusicProfile: String, twitterProfile: String, isBand: Boolean, documents: [ID], bandMembers: [ID], swLat: Float, swLng: Float, neLat: Float, neLng: Float, availabilityBetween: String, nameContains: String, orderBy: String): ArtistNodeConnection
+  users(before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String, name_Istartswith: String, username: String, username_Icontains: String, username_Istartswith: String, email: String, email_Icontains: String): UserNodeConnection
+  eventsFilter(before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, organizer_Email: String, organizer_Email_Icontains: String, organizer_Email_Istartswith: String, startDate: DateTime, startDate_Icontains: DateTime, startDate_Istartswith: DateTime, startDate_Lte: DateTime, startDate_Gte: DateTime, endDate: DateTime, endDate_Icontains: DateTime, endDate_Istartswith: DateTime, endDate_Lte: DateTime, endDate_Gte: DateTime, type: String, type_Icontains: String, settleStatus_Contains: String, description_Icontains: String, address: ID, isPublic: Boolean): EventNodeConnection
+  venueMaps(before: String, after: String, first: Int, last: Int, creator_Email: String): VenueMapNodeConnection
+  viewer: Viewer
+  chatrooms(before: String, after: String, first: Int, last: Int, isDm: Boolean): ChatRoomNodeConnection
+  analytics: Analytics
+}
+
+type RemovePaymentMethod {
+  success: Boolean
+  msg: String
+}
+
+type ReplyToTicketTransfer {
+  success: Boolean
+}
+
+type ResetPassword {
+  success: Boolean
+  msg: String
+}
+
+type RootSubscription {
+  onNewChatMessage(chatroom: [String]): OnNewChatMessage
+}
+
+type ScheduleNode implements Node {
+  slots(before: String, after: String, first: Int, last: Int): SlotNodeConnection!
+  scheduleoverrides(before: String, after: String, first: Int, last: Int): ScheduleOverrideNodeConnection!
+  id: ID!
+  weeklyAvailability: [SlotNode]
+  scheduleOverrides: [ScheduleOverrideNode]
+  bookingAvailability(gte: Date!, lte: Date!, showAvailabilityDetail: Boolean = false): [CalendarDay]
+}
+
+type ScheduleOverrideNode implements Node {
+  guarantee: Int!
+  doorSplit: Int!
+  isNegotiable: Boolean!
+  location: AddressNode!
+  day: Date!
+  startTime: Time!
+  endTime: Time!
+  isDisabled: Boolean!
+  id: ID!
+}
+
+type ScheduleOverrideNodeConnection {
+  pageInfo: PageInfo!
+  edges: [ScheduleOverrideNodeEdge]!
+}
+
+type ScheduleOverrideNodeEdge {
+  node: ScheduleOverrideNode
+  cursor: String!
+}
+
+type SendAdminInvitations {
+  success: Boolean
+}
+
+type SendBookingInvitations {
+  success: Boolean
+}
+
+type SendBookingRequest {
+  success: Boolean
+}
+
+type SendChatMessagePayload {
+  success: Boolean!
+  message: MessageNode
+}
+
+type SetPublishStatusForEvent {
+  success: Boolean
+}
+
+enum SlotDayOfWeek {
+  SUN
+  MON
+  TUES
+  WED
+  THURS
+  FRI
+  SAT
+}
+
+type SlotNode implements Node {
+  guarantee: Int!
+  doorSplit: Int!
+  isNegotiable: Boolean!
+  location: AddressNode!
+  schedule: ScheduleNode!
+  dayOfWeek: SlotDayOfWeek!
+  startTime: Time!
+  endTime: Time!
+  id: ID!
+}
+
+type SlotNodeConnection {
+  pageInfo: PageInfo!
+  edges: [SlotNodeEdge]!
+}
+
+type SlotNodeEdge {
+  node: SlotNode
+  cursor: String!
+}
+
+type StateField implements Node {
+  name: String
+  code: String
+  country: CountryField!
+  id: ID!
+}
+
+input StateInputfield {
+  name: String!
+  code: String!
+  country: CountryInputfield!
+  id: String
+}
+
+enum TicketDiscountDiscountType {
+  AMOUNT
+  PERCENT
+}
+
+type TicketDiscountNode implements Node {
+  discountType: TicketDiscountDiscountType!
+  discountAmount: Int!
+  productType: ProductTypeNode!
+  id: ID!
+}
+
+type TicketHolder {
+  amountHeld: Int
+  email: String
+  avatar: String
+}
+
+type TicketNode implements Node {
+  uuid: UUID!
+  marketplacePrice: Int
+  isOnMarketplace: Boolean!
+  isHold: Boolean!
+  hasBeenUsed: Boolean!
+  seatMapIndex: String
+  seatMapObjectId: String
+  assignedSeat: VenueNode
+  productType: ProductTypeNode
+  transfers: TicketTransferRequestNode
+  id: ID!
+  name: String
+}
+
+type TicketNodeConnection {
+  pageInfo: PageInfo!
+  edges: [TicketNodeEdge]!
+}
+
+type TicketNodeEdge {
+  node: TicketNode
+  cursor: String!
+}
+
+enum TicketTransferRequestAcceptanceStatus {
+  IN_PROGRESS
+  ACCEPTED
+  DENIED
+  CANCELLED
+}
+
+type TicketTransferRequestNode implements Node {
+  ticket: TicketNode!
+  sender: UserNode!
+  receiver: UserNode
+  receiverEmail: String
+  acceptanceStatus: TicketTransferRequestAcceptanceStatus!
+  id: ID!
+}
+
+type TicketTransferRequestNodeConnection {
+  pageInfo: PageInfo!
+  edges: [TicketTransferRequestNodeEdge]!
+}
+
+type TicketTransferRequestNodeEdge {
+  node: TicketTransferRequestNode
+  cursor: String!
+}
+
+scalar Time
+
+input TimeRange {
+  guarantee: Int = 0
+  doorSplit: Int = 0
+  isNegotiable: Boolean = true
+  location: AddressInputField
+  startTime: DateTime
+  endTime: DateTime
+  day: Date
+  isDisabled: Boolean = false
+}
+
+type TransferTicket {
+  success: Boolean
+}
+
+scalar UUID
+
+type UnFavoriteEvent {
+  success: Boolean
+  msg: String
+}
+
+type UnfollowOrganizer {
+  success: Boolean
+  msg: String
+}
+
+type UpdateEventCover {
+  success: Boolean
+  coverUrl: String
+}
+
+type UpdateProfile {
+  success: Boolean
+  msg: String
+}
+
+type UpdateProfileAdmins {
+  success: Boolean
+  msg: String
+}
+
+type UpdateReservedTickets {
+  success: Boolean
+}
+
+scalar Upload
+
+type UploadGenericFile {
+  success: Boolean
+  imageUrl: String
+}
+
+type UploadImage {
+  success: Boolean
+  imageUrl: String
+}
+
+type UserNode implements Node {
+  id: ID!
+  lastLogin: DateTime
+  username: String!
+  firstName: String!
+  lastName: String!
+  dateJoined: DateTime!
+  name: String
+  email: String!
+  avatar: String
+  isActive: Boolean!
+  isAdmin: Boolean!
+  isVerified: Boolean!
+  isInternalUser: Boolean!
+  is2faEnabled: Boolean!
+  emailConfirmed: Boolean!
+  follows(before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String, name_Istartswith: String, username: String, username_Icontains: String, username_Istartswith: String, email: String, email_Icontains: String): UserNodeConnection!
+  hosts(before: String, after: String, first: Int, last: Int, admins: [ID], avatar: String, spaceType: String, instagramProfile: String, facebookProfile: String, isAssignedSeating: Boolean, name: String, description: String, isVerified: Boolean, dailyBookingFee: Int, availabilityBetween: String, hourlyBookingFee: Int, capacity: String, exactCapacity: Int, confirmedBookings: [ID], website: String, swLat: Float, swLng: Float, neLat: Float, neLng: Float, amenities: String, genres: String, orderBy: String): VenueNodeConnection!
+  connectedUser(before: String, after: String, first: Int, last: Int, admins: [ID], avatar: String, spaceType: String, instagramProfile: String, facebookProfile: String, isAssignedSeating: Boolean, name: String, description: String, isVerified: Boolean, dailyBookingFee: Int, availabilityBetween: String, hourlyBookingFee: Int, capacity: String, exactCapacity: Int, confirmedBookings: [ID], website: String, swLat: Float, swLng: Float, neLat: Float, neLng: Float, amenities: String, genres: String, orderBy: String): VenueNodeConnection!
+  favorited(before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, organizer_Email: String, organizer_Email_Icontains: String, organizer_Email_Istartswith: String, startDate: DateTime, startDate_Icontains: DateTime, startDate_Istartswith: DateTime, startDate_Lte: DateTime, startDate_Gte: DateTime, endDate: DateTime, endDate_Icontains: DateTime, endDate_Istartswith: DateTime, endDate_Lte: DateTime, endDate_Gte: DateTime, type: String, type_Icontains: String, settleStatus_Contains: String, description_Icontains: String, address: ID, isPublic: Boolean): EventNodeConnection!
+  userMemberships(before: String, after: String, first: Int, last: Int): MembershipNodeConnection!
+  subscriptions(before: String, after: String, first: Int, last: Int): MembershipSubscriptionNodeConnection!
+  ticketTransfersSent(before: String, after: String, first: Int, last: Int): TicketTransferRequestNodeConnection!
+  ticketTransfersReceived(before: String, after: String, first: Int, last: Int): TicketTransferRequestNodeConnection!
+  followedBy(before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String, name_Istartswith: String, username: String, username_Icontains: String, username_Istartswith: String, email: String, email_Icontains: String): UserNodeConnection!
+  artists(before: String, after: String, first: Int, last: Int, admins: [ID], rootUser: ID, avatar: String, name: String, hometown: ID, description: String, isVerified: Boolean, isCurator: Boolean, isPublicProfile: Boolean, performanceTypes: String, genres: String, numberOfBandMembers: Int, spotifyProfile: String, instagramProfile: String, facebookProfile: String, youtubeProfile: String, soundcloudProfile: String, bandcampProfile: String, applemusicProfile: String, twitterProfile: String, isBand: Boolean, documents: [ID], bandMembers: [ID], swLat: Float, swLng: Float, neLat: Float, neLng: Float, availabilityBetween: String, nameContains: String, orderBy: String): ArtistNodeConnection!
+  connectedArtist(before: String, after: String, first: Int, last: Int, admins: [ID], rootUser: ID, avatar: String, name: String, hometown: ID, description: String, isVerified: Boolean, isCurator: Boolean, isPublicProfile: Boolean, performanceTypes: String, genres: String, numberOfBandMembers: Int, spotifyProfile: String, instagramProfile: String, facebookProfile: String, youtubeProfile: String, soundcloudProfile: String, bandcampProfile: String, applemusicProfile: String, twitterProfile: String, isBand: Boolean, documents: [ID], bandMembers: [ID], swLat: Float, swLng: Float, neLat: Float, neLng: Float, availabilityBetween: String, nameContains: String, orderBy: String): ArtistNodeConnection!
+  bookingsCancelledBy(before: String, after: String, first: Int, last: Int, startDate_Gte: DateTime, startDate_Gt: DateTime, startDate: DateTime): BookingNodeConnection!
+  lastUpdatedBy(before: String, after: String, first: Int, last: Int, status: String, startDate_Gte: DateTime, startDate_Gt: DateTime, startDate: DateTime): BookingRequestNodeConnection!
+  availabilities: ScheduleNode
+  chatrooms(before: String, after: String, first: Int, last: Int, isDm: Boolean): ChatRoomNodeConnection!
+  sentMessages(before: String, after: String, first: Int, last: Int): MessageNodeConnection!
+  receivedMessages(before: String, after: String, first: Int, last: Int): MessageNodeConnection!
+  databaseId: Int
+  connectedProfile: Profile
+}
+
+type UserNodeConnection {
+  pageInfo: PageInfo!
+  edges: [UserNodeEdge]!
+}
+
+type UserNodeEdge {
+  node: UserNode
+  cursor: String!
+}
+
+enum VenueCapacity {
+  INTIMATE
+  SMALL
+  MEDIUM
+  LARGE
+  VERY_LARGE
+}
+
+type VenueMapNode implements Node {
+  mapName: String!
+  venue: VenueNode
+  creator: OrganizerNode!
+  seatingChart: JSONString
+  seatingMap: JSONString
+  events(before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, organizer_Email: String, organizer_Email_Icontains: String, organizer_Email_Istartswith: String, startDate: DateTime, startDate_Icontains: DateTime, startDate_Istartswith: DateTime, startDate_Lte: DateTime, startDate_Gte: DateTime, endDate: DateTime, endDate_Icontains: DateTime, endDate_Istartswith: DateTime, endDate_Lte: DateTime, endDate_Gte: DateTime, type: String, type_Icontains: String, settleStatus_Contains: String, description_Icontains: String, address: ID, isPublic: Boolean): EventNodeConnection!
+  id: ID!
+}
+
+type VenueMapNodeConnection {
+  pageInfo: PageInfo!
+  edges: [VenueMapNodeEdge]!
+}
+
+type VenueMapNodeEdge {
+  node: VenueMapNode
+  cursor: String!
+}
+
+type VenueNode implements Node {
+  admins: [UserNode]
+  images: [String]
+  avatar: String
+  isAssignedSeating: Boolean!
+  name: String!
+  dailyBookingFee: Int!
+  hourlyBookingFee: Int!
+  description: String
+  spaceType: VenueSpaceType!
+  isVerified: Boolean!
+  socialLinks: [String]!
+  anemities: [String]!
+  capacity: VenueCapacity!
+  exactCapacity: Int
+  preferredPerformances: [String]!
+  facebookProfile: String
+  instagramProfile: String
+  confirmedBookings(before: String, after: String, first: Int, last: Int): BookingConnection!
+  bookingRequests(before: String, after: String, first: Int, last: Int, status: String, startDate_Gte: DateTime, startDate_Gt: DateTime, startDate: DateTime): BookingRequestNodeConnection!
+  id: ID!
+  address: AddressFieldNode
+  rEmail: String
+  rId: ID
+  calendar: ScheduleNode
+  chatrooms: [ChatRoomNode]
+  cancelledBookings(before: String, after: String, first: Int, last: Int): BookingConnection!
+}
+
+type VenueNodeConnection {
+  pageInfo: PageInfo!
+  edges: [VenueNodeEdge]!
+  totalCount: Int
+  edgeCount: Int
+}
+
+type VenueNodeEdge {
+  node: VenueNode
+  cursor: String!
+}
+
+enum VenueSpaceType {
+  BAR
+  RESTAURANT
+  LIVE_MUSIC_VENUE
+  EVENT_SPACE
+  OUTDOOR_AMPHITHEATER
+}
+
+type Viewer {
+  id: ID
+  username: String
+  databaseId: ID
+  email: String
+  avatar: String
+  favorited(before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, organizer_Email: String, organizer_Email_Icontains: String, organizer_Email_Istartswith: String, startDate: DateTime, startDate_Icontains: DateTime, startDate_Istartswith: DateTime, startDate_Lte: DateTime, startDate_Gte: DateTime, endDate: DateTime, endDate_Icontains: DateTime, endDate_Istartswith: DateTime, endDate_Lte: DateTime, endDate_Gte: DateTime, type: String, type_Icontains: String, settleStatus_Contains: String, description_Icontains: String, address: ID, isPublic: Boolean): EventNodeConnection
+  follows(before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String, name_Istartswith: String, username: String, username_Icontains: String, username_Istartswith: String, email: String, email_Icontains: String): UserNodeConnection
+  isOrganizer: Boolean
+  phoneNumber: String
+  invitations: [InvitationNode]
+  is2faEnabled: Boolean
+  name: String
+  tickets(before: String, after: String, first: Int, last: Int, isOnMarketplace: Boolean, isHold: Boolean, marketplacePrice: Int, marketplacePrice_Icontains: Int, marketplacePrice_Istartswith: Int, uuid: UUID, productType_Event_Id: ID): TicketNodeConnection
+  ticketTransfers: [TicketTransferRequestNode]
+  venues: [VenueNode]
+  attachedArtists: [ArtistNode]
+  chatrooms: [ChatRoomNode]
+  ping2fa(phoneNumber: String): Boolean
+  verify2faCode(phoneNumber: String, setNew: Boolean, code: String!, enableTwoFactor: Boolean): Boolean
+  enable2fa(code: String!): Boolean
+  paymentMethods: JSONString
+  yearToDateRevenue: Float
+  yearToDateDonations: Float
+  monthlyRevenue: Float
+  monthlyDonations: Float
+  primarySales: [DataPoint]
+  secondarySales: [DataPoint]
+  monthlyPrimarySales: [DataPoint]
+  monthlySecondarySales: [DataPoint]
+  heatmap: [DataPoint]
+  attendeeListCount(eventId: ID): [DataPoint]
+  attendeeSearch(viewLevel: AttendeeScope, guestStatus: AttendeeStatus, eventId: ID, email: String): [UserNode]
+  memberships: [MembershipNode]
+  events: [EventNode]
+  revenueByTicketGroup(settleStatus: [EventStatus], dateStart: Date!, dateEnd: Date!): [DataPoint]
+}
+
+type sendProfileRequest {
+  success: Boolean!
+}

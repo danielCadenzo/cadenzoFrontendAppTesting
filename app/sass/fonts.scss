@@ -1,0 +1,204 @@
+.text-align-center {
+  text-align: center;
+}
+
+.color-black {
+  color: black !important;
+}
+
+.color-gray {
+  color: $midgrey;
+}
+
+.color-lightgray {
+  color: $midgrey;
+}
+
+.color-white {
+  color: $white;
+}
+
+.color-primary {
+  color: $primary;
+}
+
+.color-secondary {
+  color: $secondary;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap !important;
+}
+
+.font-primary {
+  font-family: 'Work', 'NeuzeitSBook', sans-serif !important;
+}
+
+.roboto {
+  font-family: 'Roboto', 'Circular', '-apple-system', 'BlinkMacSystemFont',
+    'Helvetica Neue', sans-serif !important;
+}
+
+.work-sans {
+  font-family: 'Work Sans', 'Arial Narrow', Arial, sans-serif !important;
+}
+
+.work-sans-black {
+  font-family: 'WorkSans-Black', 'Arial Narrow', Arial, sans-serif !important;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-BlackItalic/WorkSans-BlackItalic.eot');
+  src: url('/static/fonts/WorkSans-BlackItalic/WorkSans-BlackItalic.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-BlackItalic/WorkSans-BlackItalic.woff')
+      format('woff'),
+    url('/static/fonts/WorkSans-BlackItalic/WorkSans-BlackItalic.ttf')
+      format('truetype'),
+    url('/static/fonts/WorkSans-BlackItalic/WorkSans-BlackItalic.svg')
+      format('svg');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-BoldItalic/WorkSans-BoldItalic.eot');
+  src: url('/static/fonts/WorkSans-BoldItalic/WorkSans-BoldItalic.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-BoldItalic/WorkSans-BoldItalic.woff')
+      format('woff'),
+    url('/static/fonts/WorkSans-BoldItalic/WorkSans-BoldItalic.ttf')
+      format('truetype'),
+    url('/static/fonts/WorkSans-BoldItalic/WorkSans-BoldItalic.svg')
+      format('svg');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-Italic/WorkSans-Italic.eot');
+  src: url('/static/fonts/WorkSans-Italic/WorkSans-Italic.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-Italic/WorkSans-Italic.woff') format('woff'),
+    url('/static/fonts/WorkSans-Italic/WorkSans-Italic.ttf') format('truetype'),
+    url('/static/fonts/WorkSans-Italic/WorkSans-Italic.svg') format('svg');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-MediumItalic/WorkSans-MediumItalic.eot');
+  src: url('/static/fonts/WorkSans-MediumItalic/WorkSans-MediumItalic.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-MediumItalic/WorkSans-MediumItalic.woff')
+      format('woff'),
+    url('/static/fonts/WorkSans-MediumItalic/WorkSans-MediumItalic.ttf')
+      format('truetype'),
+    url('/static/fonts/WorkSans-MediumItalic/WorkSans-MediumItalic.svg')
+      format('svg');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-LightItalic/WorkSans-LightItalic.eot');
+  src: url('/static/fonts/WorkSans-LightItalic/WorkSans-LightItalic.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-LightItalic/WorkSans-LightItalic.woff')
+      format('woff'),
+    url('/static/fonts/WorkSans-LightItalic/WorkSans-LightItalic.ttf')
+      format('truetype'),
+    url('/static/fonts/WorkSans-LightItalic/WorkSans-LightItalic.svg')
+      format('svg');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-Medium/WorkSans-Medium.eot');
+  src: url('/static/fonts/WorkSans-Medium/WorkSans-Medium.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-Medium/WorkSans-Medium.woff') format('woff'),
+    url('/static/fonts/WorkSans-Medium/WorkSans-Medium.ttf') format('truetype'),
+    url('/static/fonts/WorkSans-Medium/WorkSans-Medium.svg') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-Regular/WorkSans-Regular.eot');
+  src: url('/static/fonts/WorkSans-Regular/WorkSans-Regular.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-Regular/WorkSans-Regular.woff') format('woff'),
+    url('/static/fonts/WorkSans-Regular/WorkSans-Regular.ttf')
+      format('truetype'),
+    url('/static/fonts/WorkSans-Regular/WorkSans-Regular.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-Black/WorkSans-Black.eot');
+  src: url('/static/fonts/WorkSans-Black/WorkSans-Black.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-Black/WorkSans-Black.woff') format('woff'),
+    url('/static/fonts/WorkSans-Black/WorkSans-Black.ttf') format('truetype'),
+    url('/static/fonts/WorkSans-Black/WorkSans-Black.svg') format('svg');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-Bold/WorkSans-Bold.eot');
+  src: url('/static/fonts/WorkSans-Bold/WorkSans-Bold.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-Bold/WorkSans-Bold.woff') format('woff'),
+    url('/static/fonts/WorkSans-Bold/WorkSans-Bold.ttf') format('truetype'),
+    url('/static/fonts/WorkSans-Bold/WorkSans-Bold.svg') format('svg');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/static/fonts/WorkSans-Light/WorkSans-Light.eot');
+  src: url('/static/fonts/WorkSans-Light/WorkSans-Light.eot?#iefix')
+      format('embedded-opentype'),
+    url('/static/fonts/WorkSans-Light/WorkSans-Light.woff') format('woff'),
+    url('/static/fonts/WorkSans-Light/WorkSans-Light.ttf') format('truetype'),
+    url('/static/fonts/WorkSans-Light/WorkSans-Light.svg') format('svg');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NeuzeitSBook';
+  src: url('/static/fonts/NeuzeitSBook/neuzeit-s-book.eot'); /* IE9 Compat Modes */
+  src: url('/static/fonts/NeuzeitSBook/neuzeit-s-book.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ url('/static/fonts/NeuzeitSBook/neuzeit-s-book.woff')
+      format('woff'),
+    /* Modern Browsers */ url('/static/fonts/NeuzeitSBook/neuzeit-s-book.ttf')
+      format('truetype'),
+    /* Safari, Android, iOS */
+      url('/static/fonts/GothamPro-Black/GothamPro-Black.svg') format('svg'); /* Legacy iOS */
+}

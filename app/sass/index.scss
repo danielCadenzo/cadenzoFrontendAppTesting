@@ -1,0 +1,122 @@
+@import "./reset.scss";
+@import "./color-system.scss";
+@import "./colors.scss";
+@import "./variables.scss";
+@import "./mixins.scss";
+@import "./flexbox.scss";
+@import "./margin.scss";
+@import "./padding.scss";
+@import "./fonts.scss";
+@import "./typography.scss";
+@import "./borders.scss";
+@import "./layout.scss";
+@import "./truncate.scss";
+@import "./grid.scss";
+@import "./../components/Calendar/index.scss";
+
+html {
+  background-color: #ffffff;
+  max-height: 100vh;
+}
+
+a {
+  text-decoration: none !important;
+  text-decoration-style: none !important;
+  text-decoration-color: none !important;
+}
+
+p, span, b, a, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Work Sans', 'Urbanist', 'Roboto', 'Circular', '-apple-system', 'BlinkMacSystemFont', 'Helvetica Neue', sans-serif !important;
+}
+
+b {
+  font-weight: bold;
+}
+
+.full-width {
+  width: 100% !important;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.fit-content-height {
+  height: fit-content;
+}
+
+.fit-content-width {
+  width: fit-content;
+}
+
+.visibility-invisible { 
+  visibility: hidden !important;
+}
+
+.display-none {
+  display: none !important;
+}
+
+.shadow {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.circle {
+  border-radius: 100%;
+}
+
+.bg-middark {
+  background-color: $middark;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.bg-default {
+  background-color: #fafafa;
+}
+
+.color-white {
+  color: white !important;
+}
+
+.position-relative {
+  position: relative !important;
+}
+
+.cursor-pointer { 
+  cursor: pointer !important;
+}
+
+.MuiDataGrid-root .MuiDataGrid-row {
+  width: 100% !important;
+}
+
+code {
+  background-color: #eee;
+  border-radius: 3px;
+  font-family: courier, monospace;
+  padding: 0 3px;
+}
+
+
+#konva-container {
+  overflow: hidden;
+}
+
+.MuiInputLabel-outlined {
+  z-index: 0 !important;
+}
+
+.visibility-visible {
+  visibility: visible !important;
+}
+
+.MuiCheckbox-colorSecondary.Mui-checked {
+  color: $cadenzoPrimary !important;
+}
+
+.MuiPopover-paper{
+  overflow: visible !important;
+}

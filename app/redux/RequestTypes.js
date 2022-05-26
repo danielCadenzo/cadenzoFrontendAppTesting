@@ -1,0 +1,1 @@
+export const VENUE_MAP_UPDATED = 'VENUE_MAP_UPDATED';

@@ -1,0 +1,1 @@
+export const FETCH_SELECTED_EVENT = 'app/EventsPage/FETCH_SELECTED_EVENT';
